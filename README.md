@@ -5,7 +5,7 @@ This is a Spring Boot applications with integration tests and slice tests.
 - Slice tests
   - [Repository layer](#slice-tests---repository-layer)
   - [Service layer](#slice-tests---service-layer)
-  - Web layer
+  - [Web layer](#slice-tests---web-layer)
 - Integration tests
   - With a servlet container
   - Mocking the servlet container
@@ -42,3 +42,21 @@ public class EmployeeServiceTest {
   ...
 }
 ```
+
+### Slice tests - Web layer
+
+The web layer slice tests are implemented using `@WebMvcTest` annotation. This annotation will bootstrap only the web layer of the application and will not load the full application context. It will also autoconfigure `MockMvc` which provides a way to test the web layer of the application.
+
+```
+@WebMvcTest(EmployeeController.class)
+public class EmployeeControllerTest {
+  ...
+}
+```
+
+The following responsibilities were tested:
+- Verifying HTTP Request Matching, response status, and response body.
+- Verifying Input Deserialization and Output Serialization.
+- Verifying Input Validation.
+- Verifying Business Logic Calls (service).
+- Verifying Exception Handling
