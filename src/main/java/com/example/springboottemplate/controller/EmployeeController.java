@@ -2,6 +2,8 @@ package com.example.springboottemplate.controller;
 
 import com.example.springboottemplate.entity.Employee;
 import com.example.springboottemplate.service.EmployeeService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,7 +51,7 @@ public class EmployeeController {
      * @return Saved Employee entity
      */
     @PostMapping("/")
-    public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employee)
+    public ResponseEntity<Employee> saveEmployee(@Valid @RequestBody Employee employee)
     {
         return ResponseEntity.ok().body(employeeService.saveEmployee(employee));
     }
@@ -62,7 +64,7 @@ public class EmployeeController {
      * @return Updated Employee
      */
     @PutMapping("/")
-    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee)
+    public ResponseEntity<Employee> updateEmployee(@Valid @RequestBody Employee employee)
     {
         return ResponseEntity.ok().body(employeeService.updateEmployee(employee));
     }
