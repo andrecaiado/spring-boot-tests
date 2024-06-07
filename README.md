@@ -11,6 +11,20 @@ The tests implemented in this project are the following:
   - [With an embedded servlet container](#with-an-embedded-servlet-container)
   - [Mocking the servlet container](#mocking-the-servlet-container)
 
+**Notes on running the tests**:
+
+The [Maven Surefire](https://maven.apache.org/surefire/maven-surefire-plugin/usage.html) and [Maven Failsafe](https://maven.apache.org/surefire/maven-failsafe-plugin/index.html) plugins are configured in the [pom.xml](pom.xml) to run the slice tests (unit tests) and the integration-tests.
+
+To run the slice tests:
+```shell
+mvn surefire:test
+```
+
+To run the integration tests:
+```shell
+mvn failsafe:integration-test
+```
+
 ## Slice tests
 
 Slice tests allows to perform isolated tests within a slice of the application, e.g., repository slice, web slice. In slice tests, dependencies need to be mocked.
