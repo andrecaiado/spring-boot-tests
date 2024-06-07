@@ -3,19 +3,19 @@ This is a Spring Boot applications with slice tests and integration tests.
 
 The tests implemented in this project are the following:
 
-- Slice tests
-  - [Repository layer](#slice-tests---repository-layer)
-  - [Service layer](#slice-tests---service-layer)
-  - [Web layer](#slice-tests---web-layer)
-- Integration tests
-  - With an embedded servlet container
-  - Mocking the servlet container
+- [Slice tests](#slice-tests)
+  - [Repository layer](#repository-layer)
+  - [Service layer](#service-layer)
+  - [Web layer](#web-layer)
+- [Integration tests](#integration-tests)
+  - [With an embedded servlet container](#with-an-embedded-servlet-container)
+  - [Mocking the servlet container](#mocking-the-servlet-container)
 
 ## Slice tests
 
-WHAT ARE SLICE TESTS
+Slice tests allows to perform isolated tests within a slice of the application, e.g., repository slice, web slice. In slice tests, dependencies need to be mocked.
 
-### Repository layer
+### Repository slice
 
 The repository slice tests are implemented using `@DataJpaTest` annotation. This annotation will bootstrap only the repository layer of the application and will not load the full application context. It will also autoconfigure `TestEntityManager` which provides a subset of `EntityManager` methods.
 
@@ -35,7 +35,7 @@ The H2 database will be populated by Flyway with the schema and data from the `s
 **Notes:**
 - By default, all tests decorated with the `@DataJpaTest` annotation become transactional. This means that the test will run within a transaction that will be rolled back at the end of the test.
 
-### Service layer
+### Service slice
 
 Slice tests usually refers to the repository or web layer, nevertheless, we are going to use the term to refer to the service layer tests as well.
 
@@ -48,7 +48,7 @@ public class EmployeeServiceTest {
 }
 ```
 
-### Web layer
+### Web slice
 
 The web layer slice tests are implemented using `@WebMvcTest` annotation. This annotation will bootstrap only the web layer of the application and will not load the full application context. It will also autoconfigure `MockMvc` which provides a way to test the web layer of the application.
 
@@ -75,6 +75,15 @@ When using this annotation, Spring Boot automatically searches for a class annot
 If we want to explicitly specify the classes we want to use for configuration, we can combine the `@SpringBootTest` annotation with the `@ContextConfiguration` annotation.
 
 The `@SpringBootTest` annotation will also autoconfigure a `TestRestTemplate`so we can test the endpoints.
+
+**Notes:**
+
+This project follows the approach that says that unit and integration tests should have different source and resource directories. For this purpose, the following folders were created:
+
+- src/integration-test/java
+- src/integration-test/resources
+
+The folders were created manually and the [Build Helper Maven plugin](https://www.mojohaus.org/build-helper-maven-plugin/) was configured in the [pom.xml](pom.xml) to set the directories as source and resources.
 
 ### With an embedded servlet container
 
