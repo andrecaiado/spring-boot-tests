@@ -36,11 +36,11 @@ The repository slice tests are implemented using `@DataJpaTest` annotation. This
 When using `@DataJpaTest` annotation, an in-memory database is autoconfigured and replaces any explicit or autoconfigured DataSource.
 We will use the `@AutoConfigureTestDatabase` annotation to override this default behavior and use the database configuration we provide for tests in the `src/test/resources/application.yaml` file that will bootstrap an H2 database.
 
-```
+```java
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class EmployeeRepositoryTest {
-  ...
+  // Add tests here
 }
 ```
 
@@ -55,10 +55,10 @@ Slice tests usually refers to the repository or web layer, nevertheless, we are 
 
 We use the SpringExtension class provided by the Spring Framework to enable integration between Spring and JUnit. To do this, we use the `@ExtendWith` annotation and pass the `Spring Extension` class as a parameter.
 
-```
+```java
 @ExtendWith(SpringExtension.class)
 public class EmployeeServiceTest {
-  ...
+    
 }
 ```
 
@@ -66,10 +66,10 @@ public class EmployeeServiceTest {
 
 The web layer slice tests are implemented using `@WebMvcTest` annotation. This annotation will bootstrap only the web layer of the application and will not load the full application context. It will also autoconfigure `MockMvc` which provides a way to test the web layer of the application.
 
-```
+```java
 @WebMvcTest(EmployeeController.class)
 public class EmployeeControllerTest {
-  ...
+    
 }
 ```
 
@@ -103,13 +103,13 @@ The folders were created manually and the [Build Helper Maven plugin](https://ww
 
 This is the default behavior of the `@SpringBootTest` annotation. It will start the embedded servlet container and will bootstrap the full application context.
 
-```
+```java
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class EmployeeControllerIT {
   
   @Autowired
   private TestRestTemplate testRestTemplate;
-  ...
+
 }
 ```
 
@@ -129,7 +129,7 @@ A mocked servlet container allows to process the requests through the Dispatcher
 
 Adding the `@AutoConfigureMockMvc` annotation will autoconfigure the `MockMvc` bean that we can then inject in the tests.
 
-```
+```java
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -139,12 +139,6 @@ public class EmployeeControllerIT {
 
   @Autowired
   private MockMvc mockMvc;
-  
-  @Test
-  public void testGetAllEmployees() {
-    mockMvc.perform(get("/employee/v1/"))
-            .andExpect(status().isOK());
-  }
-  
+
 }
 ```
