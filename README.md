@@ -94,6 +94,12 @@ In the above example, we are starting the embedded servlet container with a rand
 
 The `TestRestTemplate` will be autoconfigured to use the random port and that's why we can use relative paths instead of absolute paths.
 
+**Notes:**
+
+As the `testDeleteEmployeeById` deletes the record from the embedded database, the following was implemented:
+- The test was annotated with `@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)` so the context is reloaded after the method is executed and the database is recreated.
+- The database name was appended with a random uuid, so it forces to create a new instance of the database.
+
 ### Mocking the servlet container
 
 This is an alternative to the previous approach. We can use the `@SpringBootTest` annotation with the `@AutoConfigureMockMvc` annotation to mock the servlet container.
