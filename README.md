@@ -15,14 +15,19 @@ The tests implemented in this project are the following:
 
 The [Maven Surefire](https://maven.apache.org/surefire/maven-surefire-plugin/usage.html) and [Maven Failsafe](https://maven.apache.org/surefire/maven-failsafe-plugin/index.html) plugins are configured in the [pom.xml](pom.xml) to run the slice tests (unit tests) and the integration-tests.
 
-To run the slice tests:
+Run the slice tests:
 ```shell
 mvn surefire:test
 ```
 
-To run the integration tests:
+Run the integration tests:
 ```shell
 mvn failsafe:integration-test
+```
+
+Run all the tests:
+```shell
+mvn verify
 ```
 
 ## Slice tests
