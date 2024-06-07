@@ -111,12 +111,26 @@ As the `testDeleteEmployeeById` deletes the record from the embedded database, t
 
 ### Mocking the servlet container
 
-This is an alternative to the previous approach. We can use the `@SpringBootTest` annotation with the `@AutoConfigureMockMvc` annotation to mock the servlet container.
+A mocked servlet container allows to process the requests through the DispatcherServlet but without running a servlet container.
+
+Adding the `@AutoConfigureMockMvc` annotation will autoconfigure the `MockMvc` bean that we can then inject in the tests.
 
 ```
-@SpringBootTest
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 public class EmployeeControllerIT {
-  ...
+
+  @Autowired
+  private MockMvc mockMvc;
+  
+  @Test
+  public void testGetAllEmployees() {
+    mockMvc.perform(get("/employee/v1/"))
+            .andExpect(status().isOK());
+  }
+  
 }
 ```
